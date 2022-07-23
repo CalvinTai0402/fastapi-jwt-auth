@@ -439,18 +439,22 @@ class AuthJWT(AuthConfig):
             raise TypeError("The response must be an object response FastAPI")
 
         response = response or self._response
-
+        
         response.delete_cookie(
             self._access_cookie_key,
             path=self._access_cookie_path,
-            domain=self._cookie_domain
+            domain=self._cookie_domain,
+            samesite=self._cookie_samesite,
+            secure=self._cookie_secure
         )
 
         if self._cookie_csrf_protect:
             response.delete_cookie(
                 self._access_csrf_cookie_key,
                 path=self._access_csrf_cookie_path,
-                domain=self._cookie_domain
+                domain=self._cookie_domain,
+                samesite=self._cookie_samesite,
+                secure=self._cookie_secure
             )
 
     def unset_refresh_cookies(self,response: Optional[Response] = None) -> None:
@@ -472,14 +476,18 @@ class AuthJWT(AuthConfig):
         response.delete_cookie(
             self._refresh_cookie_key,
             path=self._refresh_cookie_path,
-            domain=self._cookie_domain
+            domain=self._cookie_domain,
+            samesite=self._cookie_samesite,
+            secure=self._cookie_secure
         )
 
         if self._cookie_csrf_protect:
             response.delete_cookie(
                 self._refresh_csrf_cookie_key,
                 path=self._refresh_csrf_cookie_path,
-                domain=self._cookie_domain
+                domain=self._cookie_domain,
+                samesite=self._cookie_samesite,
+                secure=self._cookie_secure
             )
 
     def _verify_and_get_jwt_optional_in_cookies(
