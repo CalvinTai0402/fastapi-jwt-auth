@@ -70,7 +70,7 @@ class LoadConfig(BaseModel):
 
     @validator('authjwt_cookie_samesite')
     def validate_cookie_samesite(cls, v):
-        if v not in ['strict','lax','none']:
+        if v not in ['strict','lax','none', 'None']:
             raise ValueError("The 'authjwt_cookie_samesite' must be between 'strict', 'lax', 'none'")
         return v
 
